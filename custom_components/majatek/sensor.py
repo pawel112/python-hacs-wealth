@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from homeassistant.components.sensor import SensorDeviceClass, SensorEntity, SensorStateClass
+from homeassistant.components.sensor import SensorDeviceClass, SensorEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo
@@ -22,13 +22,13 @@ async def async_setup_entry(
         state["entities"][key] = entity
         entities.append(entity)
 
-    if state["total_entity"] is None:
-        state["total_entity"] = MajatekTotalSensor(hass)
-        entities.append(state["total_entity"])
+    total_entity = MajatekTotalSensor(hass)
+    state["total_entity"] = total_entity
+    entities.append(total_entity)
 
-    if state["status_entity"] is None:
-        state["status_entity"] = MajatekStatusSensor(hass)
-        entities.append(state["status_entity"])
+    status_entity = MajatekStatusSensor(hass)
+    state["status_entity"] = status_entity
+    entities.append(status_entity)
 
     async_add_entities(entities)
 
@@ -59,7 +59,6 @@ class MajatekBaseEntity(SensorEntity):
 
 class MajatekValueSensor(MajatekBaseEntity):
     _attr_device_class = SensorDeviceClass.MONETARY
-    _attr_state_class = SensorStateClass.TOTAL
     _attr_icon = "mdi:cash-multiple"
 
     def __init__(self, hass: HomeAssistant, key: str, label: str) -> None:
@@ -83,7 +82,6 @@ class MajatekValueSensor(MajatekBaseEntity):
 
 class MajatekTotalSensor(MajatekBaseEntity):
     _attr_device_class = SensorDeviceClass.MONETARY
-    _attr_state_class = SensorStateClass.TOTAL
     _attr_icon = "mdi:calculator"
     _attr_name = TOTAL_NAME
     _attr_unique_id = f"{DEVICE_ID}_{TOTAL_KEY}"

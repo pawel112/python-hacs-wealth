@@ -87,4 +87,5 @@ class MajatekPostView(HomeAssistantView):
             "ok": True,
             "currency": state["currency"],
             "accepted_keys": sorted([key for key in CATEGORIES if key in payload]),
+            "total": sum(v for v in state["values"].values() if isinstance(v, (int, float))),
         })
