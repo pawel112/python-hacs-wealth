@@ -1,0 +1,17 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Majątek",
+        "description": "Dodaje urządzenie Majątek i zabezpieczony endpoint POST /api/majatek",
+        "data": {
+          "currency": "Domyślna waluta",
+          "token": "Token dostępu"
+        }
+      }
+    },
+    "abort": {
+      "single_instance_allowed": "Integracja może być dodana tylko raz."
+    }
+  }
+}
