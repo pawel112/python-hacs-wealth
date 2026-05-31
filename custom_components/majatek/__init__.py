@@ -20,6 +20,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
             "values": {key: None for key in CATEGORIES},
             "entities": {},
             "status_entity": None,
+            "total_entity": None,
         },
     )
     hass.http.register_view(MajatekPostView(hass))
@@ -75,6 +76,9 @@ class MajatekPostView(HomeAssistantView):
 
         for entity in state["entities"].values():
             entity.async_write_ha_state()
+
+        if state["total_entity"] is not None:
+            state["total_entity"].async_write_ha_state()
 
         if state["status_entity"] is not None:
             state["status_entity"].async_write_ha_state()

@@ -12,13 +12,14 @@ MODEL = "Asset Collector"
 CATEGORIES = {
     "konto_bankowe": "Konto bankowe",
     "gotowka": "Gotówka",
-    "kapital": "Kapitał",
     "karta_kredytowa": "Karta kredytowa",
     "gielda": "Giełda",
     "ike": "IKE",
     "ikze": "IKZE",
     "zus": "ZUS",
     "konta_celowe": "Konta celowe",
-    "inwestycje": "Inwestycje",
     "inne": "Inne",
 }
+
+TOTAL_KEY = "suma"
+TOTAL_NAME = "Suma"

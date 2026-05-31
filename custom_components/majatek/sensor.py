@@ -6,7 +6,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity import DeviceInfo
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 
-from .const import CATEGORIES, DEVICE_ID, DEVICE_NAME, DOMAIN, MANUFACTURER, MODEL
+from .const import CATEGORIES, DEVICE_ID, DEVICE_NAME, DOMAIN, MANUFACTURER, MODEL, TOTAL_KEY, TOTAL_NAME
 
 
 async def async_setup_entry(
@@ -21,6 +21,10 @@ async def async_setup_entry(
         entity = MajatekValueSensor(hass, key, label)
         state["entities"][key] = entity
         entities.append(entity)
+
+    if state["total_entity"] is None:
+        state["total_entity"] = MajatekTotalSensor(hass)
+        entities.append(state["total_entity"])
 
     if state["status_entity"] is None:
         state["status_entity"] = MajatekStatusSensor(hass)
@@ -75,6 +79,24 @@ class MajatekValueSensor(MajatekBaseEntity):
     @property
     def extra_state_attributes(self):
         return {"category_key": self.key}
+
+
+class MajatekTotalSensor(MajatekBaseEntity):
+    _attr_device_class = SensorDeviceClass.MONETARY
+    _attr_state_class = SensorStateClass.TOTAL
+    _attr_icon = "mdi:calculator"
+    _attr_name = TOTAL_NAME
+    _attr_unique_id = f"{DEVICE_ID}_{TOTAL_KEY}"
+
+    @property
+    def native_value(self):
+        values = self._state["values"].values()
+        total = sum(value for value in values if isinstance(value, (int, float)))
+        return round(total, 2)
+
+    @property
+    def native_unit_of_measurement(self):
+        return self._state["currency"]
 
 
 class MajatekStatusSensor(MajatekBaseEntity):
