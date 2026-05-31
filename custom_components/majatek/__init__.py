@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from aiohttp import web
+from homeassistant.components.http import HomeAssistantView
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.typing import ConfigType
@@ -37,7 +38,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     return await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
 
 
-class MajatekPostView:
+class MajatekPostView(HomeAssistantView):
     url = "/api/majatek"
     name = "api:majatek"
     requires_auth = False
