@@ -16,8 +16,10 @@ CATEGORIES = {
     "gielda": "Giełda",
     "ike": "IKE",
     "ikze": "IKZE",
+    "ppk": "PPK",
     "zus": "ZUS",
     "konta_celowe": "Konta celowe",
+    "pozyczki": "Pożyczki",
     "inne": "Inne",
 }
 
